@@ -90,6 +90,8 @@ endfunction
 inoremap <silent><C-j> <C-R>=OmniPopup('j')<CR>
 inoremap <silent><C-k> <C-R>=OmniPopup('k')<CR>
 
+" Vim color schems
+Plugin 'flazz/vim-colorschemes'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -115,3 +117,6 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+
+" Set color scheme
+colorscheme molokai
