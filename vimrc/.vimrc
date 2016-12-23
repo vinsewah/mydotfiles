@@ -15,6 +15,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " Powerline
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+
 " Powerline setup
 set guifont=Inconsolata\ for\ Powerline:h15
 let g:Powerline_symbols = 'fancy'
@@ -41,8 +42,7 @@ let NERDTreeShowHidden=1
 " autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 
-" Don't autofold code
-let g:pymode_folding = 0
+Plugin 'jistr/vim-nerdtree-tabs'
 
 " CtrlP
 Bundle 'kien/ctrlp.vim'
@@ -67,6 +67,50 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Vim color schems
 Plugin 'flazz/vim-colorschemes'
+
+" ------------
+" Start Python Stuff 
+
+" Code folding
+Plugin 'tmhedberg/SimpylFold'
+let g:SimpylFold_docstring_preview=1
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+
+" Auto indent
+Plugin 'vim-scripts/indentpython.vim'
+
+" Auto complete
+Bundle 'Valloric/YouCompleteMe'
+
+" python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+" Syntax highlighting and checking
+Plugin 'scrooloose/syntastic'
+
+let python_highlight_all=1
+
+" Add PEP8 checking
+Plugin 'nvie/vim-flake8'
+" Make your code look pretty 
+let python_highlight_all=1
+
+" End Python Stuff
+" ----------------
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -102,3 +146,29 @@ set path+=**
 
 " Display all matching files when we tab complete
 set wildmenu 
+
+" specify different areas of the screen where the splits should occur
+set splitbelow
+set splitright
+
+" split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+ " Flag whitespace
+" define BadWhitespace before using in a match
+" highlight BadWhitespace ctermbg=red guibg=darkred
+" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" This will give you the standard four spaces when you hit tab, ensure your line length doesn’t go beyond 80 characters, and store the file in a unix format so you don’t get a bunch of conversion issues when checking into GitHub and/or sharing with other users. 
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix 
+
