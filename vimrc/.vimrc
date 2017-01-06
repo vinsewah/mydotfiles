@@ -36,11 +36,11 @@ Bundle 'scrooloose/nerdtree'
 " Give a shortcut key to NERD Tree
 map <F2> :NERDTreeToggle<CR>
 
-" Show hidden files in NerdTree
-let NERDTreeShowHidden=1
 " autopen NERDTree and focus cursor in new document
 " autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
+
+let NERDTreeIgnore = ['\.pyc$']
 
 Plugin 'jistr/vim-nerdtree-tabs'
 
@@ -52,18 +52,26 @@ let g:ctrlp_max_height = 30
 set wildignore+=*.pyc
 set wildignore+=*_build/*
 set wildignore+=*/coverage/*
+let g:ctrlp_working_path_mode = 'ra'
 
 if executable('ag')
- " Use ag over grep
- set grepprg=ag\ --nogroup\ --nocolor
- " Use ag in CtrlP for listing files. Lightning fast and respects
- " gitignore
- let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+ 	" Use ag over grep
+ 	set grepprg=ag\ --nogroup\ --nocolor
+ 	" Use ag in CtrlP for listing files. Lightning fast and respects
+ 	" gitignore
+ 	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+ 	" ag is fast enough that CtrlP doesn't need to cache
+ 	let g:ctrlp_use_caching = 0
+	set grepformat=%f:%l:%c:%m,%f:%l:%m
+    " nnoremap K :silent! grep! "\b<C-r><C-w>\b"<CR>:cwindow<CR>:redraw!<CR>
+    nnoremap K :silent! Ack! -Q <C-r>=expand('<cword>')<CR><CR>
+
+    command! -nargs=+ -complete=file_in_path -bar Ag silent grep! <args>|cwindow|redraw!
+    let g:ackprg = 'ag --vimgrep --nogroup --nocolor --column'
 endif
 
 " Ack
 Plugin 'mileszs/ack.vim'
-let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Vim color schems
 Plugin 'flazz/vim-colorschemes'
@@ -157,10 +165,12 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
- " Flag whitespace
-" define BadWhitespace before using in a match
-" highlight BadWhitespace ctermbg=red guibg=darkred
-" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+" Use the below highlight group when displaying bad whitespace is desired.
+highlight BadWhitespace ctermbg=red guibg=red
+" Display tabs at the beginning of a line in Python mode as bad.
+au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
+" Make trailing whitespace be flagged as bad.
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " This will give you the standard four spaces when you hit tab, ensure your line length doesn’t go beyond 80 characters, and store the file in a unix format so you don’t get a bunch of conversion issues when checking into GitHub and/or sharing with other users. 
 au BufNewFile,BufRead *.py
@@ -172,3 +182,9 @@ au BufNewFile,BufRead *.py
     \ set autoindent |
     \ set fileformat=unix 
 
+" Automatically update tag files
+Plugin 'craigemery/vim-autotag'
+
+" Navigate between files stored in buffer
+:nnoremap <Tab> :bnext<CR>
+:nnoremap <S-Tab> :bprevious<CR>
