@@ -64,7 +64,7 @@ if executable('ag')
  	let g:ctrlp_use_caching = 0
 	set grepformat=%f:%l:%c:%m,%f:%l:%m
     " nnoremap K :silent! grep! "\b<C-r><C-w>\b"<CR>:cwindow<CR>:redraw!<CR>
-    nnoremap K :silent! Ack! -Q <C-r>=expand('<cword>')<CR><CR>
+    nnoremap K :silent! Ack! -Q <C-r>=expand('<cword>')<CR>
 
     command! -nargs=+ -complete=file_in_path -bar Ag silent grep! <args>|cwindow|redraw!
     let g:ackprg = 'ag --vimgrep --nogroup --nocolor --column'
@@ -91,7 +91,7 @@ set foldlevel=99
 nnoremap <space> za
 
 " Auto indent
-Plugin 'vim-scripts/indentpython.vim'
+" Plugin 'vim-scripts/indentpython.vim'
 
 " Auto complete
 Bundle 'Valloric/YouCompleteMe'
@@ -109,15 +109,42 @@ EOF
 " Syntax highlighting and checking
 Plugin 'scrooloose/syntastic'
 
-let python_highlight_all=1
-
 " Add PEP8 checking
 Plugin 'nvie/vim-flake8'
+
+"" Highlight groups for errors
+" pep8 errors
+highlight default Flake8_Error
+            \ ctermbg=DarkRed ctermfg=Red cterm=bold
+            \ guibg=DarkRed   guifg=Red   gui=bold
+" pep8 warnings
+highlight default Flake8_Warning
+            \ ctermbg=Yellow ctermfg=DarkYellow cterm=bold
+            \ guibg=Yellow   guifg=DarkYellow   gui=bold
+" PyFlakes codes
+highlight default Flake8_PyFlake
+            \ ctermbg=DarkBlue ctermfg=Blue cterm=bold
+            \ guibg=DarkBlue   guifg=Blue   gui=bold
+" McCabe complexity warnings
+highlight default Flake8_Complexity
+            \ ctermbg=DarkBlue ctermfg=Blue cterm=bold
+            \ guibg=DarkBlue   guifg=Blue   gui=bold
+" naming conventions
+highlight default Flake8_Naming
+            \ ctermbg=DarkBlue ctermfg=Blue cterm=bold
+            \ guibg=DarkBlue   guifg=Blue   gui=bold
+
 " Make your code look pretty 
 let python_highlight_all=1
 
 " End Python Stuff
 " ----------------
+
+" Automatically update tag files
+Plugin 'craigemery/vim-autotag'
+let g:autotagTagsFile = "./tags"
+set tags=./tags;$HOME/.tags
+set autochdir
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -177,13 +204,10 @@ au BufNewFile,BufRead *.py
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
-    \ set textwidth=79 |
+    \ set textwidth=120 |
     \ set expandtab |
     \ set autoindent |
     \ set fileformat=unix 
-
-" Automatically update tag files
-Plugin 'craigemery/vim-autotag'
 
 " Navigate between files stored in buffer
 :nnoremap <Tab> :bnext<CR>

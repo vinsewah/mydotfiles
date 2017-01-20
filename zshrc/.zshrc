@@ -83,7 +83,12 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source '/Users/vincentchang/src/blessclient/lyftprofile' # bless ssh alias
 
 alias so="ssh vince-onebox.dev.ln"
-alias spapi="ssh publicapi-legacy-vince-onebox.dev.ln"
+alias spa="ssh publicapi-legacy-vince-onebox.dev.ln"
+alias sfr="ssh fixedroutes-legacy-vince-onebox.dev.ln"
+alias sal="ssh api-legacy-vince-onebox.dev.ln"
+alias sf="ssh fanner-legacy-vince-onebox.dev.ln"
+alias ctags="`brew --prefix`/bin/ctags" 
+alias ct="ctags -R -f ./tags ."
+source '/Users/vincentchang/src/blessclient/lyftprofile' # bless ssh alias
