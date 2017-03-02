@@ -3,6 +3,10 @@ filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+
+" Map <leader> key to comma
+let mapleader=","
+
 call vundle#begin()
 
 " alternatively, pass a path where Vundle should install plugins
@@ -45,7 +49,7 @@ let NERDTreeIgnore = ['\.pyc$']
 Plugin 'jistr/vim-nerdtree-tabs'
 
 " CtrlP
-Bundle 'kien/ctrlp.vim'
+Bundle 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_max_height = 30
@@ -76,6 +80,11 @@ Plugin 'mileszs/ack.vim'
 " Vim color schems
 Plugin 'flazz/vim-colorschemes'
 
+Plugin 'jiangmiao/auto-pairs'
+
+" Async commands
+Bundle 'tpope/vim-dispatch'
+
 " ------------
 " Start Python Stuff 
 
@@ -89,9 +98,6 @@ set foldlevel=99
 
 " Enable folding with the spacebar
 nnoremap <space> za
-
-" Auto indent
-" Plugin 'vim-scripts/indentpython.vim'
 
 " Auto complete
 Bundle 'Valloric/YouCompleteMe'
@@ -137,15 +143,20 @@ highlight default Flake8_Naming
 " Make your code look pretty 
 let python_highlight_all=1
 
+" Taglist
+Bundle "taglist.vim"
+let g:Tlist_Ctags_Cmd='/usr/local/bin/ctags'  " Proper ctags location
+nnoremap <Leader>t :TlistToggle<CR>
 " End Python Stuff
 " ----------------
 
 " Automatically update tag files
 Plugin 'craigemery/vim-autotag'
 let g:autotagTagsFile = "./tags"
-set tags=./tags;$HOME/.tags
+set tags=./.tags;$HOME/.tags
 set autochdir
 
+Bundle "kshenoy/vim-signature"
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -155,9 +166,6 @@ syntax on
 
 " Enable number lines
 set nu 
-
-" Map <leader> key to comma
-let mapleader=","
 
 " Real programmers don't use TABs but spaces
 set tabstop=4 " tab spacing
@@ -212,3 +220,24 @@ au BufNewFile,BufRead *.py
 " Navigate between files stored in buffer
 :nnoremap <Tab> :bnext<CR>
 :nnoremap <S-Tab> :bprevious<CR>
+
+" Resizing windows
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+
+" fugitive git bindings
+nnoremap <Leader>ga :Git add %:p<CR><CR>
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gc :Gcommit -v -q<CR>
+nnoremap <Leader>gt :Gcommit -v -q %:p<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>ge :Gedit<CR>
+nnoremap <Leader>gr :Gread<CR>
+nnoremap <Leader>gw :Gwrite<CR><CR>
+nnoremap <Leader>gl :silent! Glog<CR>:bot copen<CR>
+nnoremap <Leader>gp :Ggrep<Space>
+nnoremap <Leader>gm :Gmove<Space>
+nnoremap <Leader>gb :Git branch<Space>
+nnoremap <Leader>go :Git checkout<Space>
+nnoremap <Leader>gps :Dispatch! git push<CR>
+nnoremap <Leader>gpl :Dispatch! git pull<CR>
