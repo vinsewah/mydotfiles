@@ -147,6 +147,24 @@ let python_highlight_all=1
 Bundle "taglist.vim"
 let g:Tlist_Ctags_Cmd='/usr/local/bin/ctags'  " Proper ctags location
 nnoremap <Leader>t :TlistToggle<CR>
+
+" Use the below highlight group when displaying bad whitespace is desired.
+highlight BadWhitespace ctermbg=red guibg=red
+" Display tabs at the beginning of a line in Python mode as bad.
+au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
+" Make trailing whitespace be flagged as bad.
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" This will give you the standard four spaces when you hit tab, ensure your line length doesn’t go beyond 80 characters, and store the file in a unix format so you don’t get a bunch of conversion issues when checking into GitHub and/or sharing with other users. 
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 | " tab spacing
+    \ set softtabstop=4 | " unify
+    \ set shiftwidth=4 | " indent/outdent by 4 columns
+    \ set textwidth=120 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix 
+    \ set shiftround " always indent to the nearest tab stop
 " End Python Stuff
 " ----------------
 
@@ -166,13 +184,6 @@ syntax on
 
 " Enable number lines
 set nu 
-
-" Real programmers don't use TABs but spaces
-set tabstop=4 " tab spacing
-set softtabstop=4 " unify
-set shiftwidth=4 " indent/outdent by 4 columns
-set shiftround " always indent to the nearest tab stop
-set expandtab " use spaces instead of tabs
 
 " Make search case insensitive
 set hlsearch 
@@ -200,22 +211,15 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Use the below highlight group when displaying bad whitespace is desired.
-highlight BadWhitespace ctermbg=red guibg=red
-" Display tabs at the beginning of a line in Python mode as bad.
-au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-" Make trailing whitespace be flagged as bad.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
-" This will give you the standard four spaces when you hit tab, ensure your line length doesn’t go beyond 80 characters, and store the file in a unix format so you don’t get a bunch of conversion issues when checking into GitHub and/or sharing with other users. 
-au BufNewFile,BufRead *.py
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=120 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix 
+" Tab spacing
+set tabstop=4       " The width of a TAB is set to 4.
+                    " Still it is a \t. It is just that
+                    " Vim will interpret it to be having
+                    " a width of 4.
+set shiftwidth=4    " Indents will have a width of 4
+set softtabstop=4   " Sets the number of columns for a TAB
+set expandtab       " Expand TABs to spaces
+set shiftround      " always indent to the nearest tab stop
 
 " Navigate between files stored in buffer
 :nnoremap <Tab> :bnext<CR>
