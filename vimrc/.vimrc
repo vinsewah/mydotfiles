@@ -7,14 +7,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 let mapleader=","
 
 call vundle#begin()
-
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-
-" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
 
 " Powerline
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -42,10 +36,6 @@ Bundle 'scrooloose/nerdtree'
 " Give a shortcut key to NERD Tree
 map <F2> :NERDTreeToggle<CR>
 
-" autopen NERDTree and focus cursor in new document
-" autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-
 let NERDTreeIgnore = ['\.pyc$']
 
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -55,6 +45,7 @@ Bundle 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_max_height = 30
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 set wildignore+=*.pyc
 set wildignore+=*_build/*
 set wildignore+=*/coverage/*
@@ -97,18 +88,6 @@ Plugin 'mxw/vim-jsx'
 
 " ------------
 " Start Python Stuff
-
-" Code folding
-Plugin 'tmhedberg/SimpylFold'
-let g:SimpylFold_docstring_preview=1
-
-" Enable folding
-set foldmethod=indent
-set foldlevel=99
-
-" Enable folding with the spacebar
-nnoremap <space> za
-
 " Auto complete
 Bundle 'Valloric/YouCompleteMe'
 
