@@ -147,14 +147,7 @@ au BufNewFile,BufRead *.py
 " End Python Stuff
 " ----------------
 
-" Automatically update tag files
-Plugin 'craigemery/vim-autotag'
-let g:autotagTagsFile = "./tags"
-set tags=./.tags;$HOME/.tags
-set autochdir
-
 Bundle "kshenoy/vim-signature"
-Bundle "saltstack/salt-vim"
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
