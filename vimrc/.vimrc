@@ -40,35 +40,15 @@ let NERDTreeIgnore = ['\.pyc$']
 
 Plugin 'jistr/vim-nerdtree-tabs'
 
-" CtrlP
-Bundle 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_max_height = 30
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
-set wildignore+=*.pyc
-set wildignore+=*_build/*
-set wildignore+=*/coverage/*
-let g:ctrlp_working_path_mode = 'ra'
-
+" The Silver Searcher
+Plugin 'rking/ag.vim'
 if executable('ag')
- 	" Use ag over grep
- 	set grepprg=ag\ --nogroup\ --nocolor
- 	" Use ag in CtrlP for listing files. Lightning fast and respects
- 	" gitignore
- 	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
- 	" ag is fast enough that CtrlP doesn't need to cache
- 	let g:ctrlp_use_caching = 0
-	set grepformat=%f:%l:%c:%m,%f:%l:%m
-    " nnoremap K :silent! grep! "\b<C-r><C-w>\b"<CR>:cwindow<CR>:redraw!<CR>
-    nnoremap K :silent! Ack! -Q <C-r>=expand('<cword>')<CR>
-
-    command! -nargs=+ -complete=file_in_path -bar Ag silent grep! <args>|cwindow|redraw!
-    let g:ackprg = 'ag --vimgrep --nogroup --nocolor --column'
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
 endif
 
-" Ack
-Plugin 'mileszs/ack.vim'
+" bind K to grep word under cursor
+noremap K :Ag! -Q <C-r>=expand('<cword>')<CR>
 
 " Vim color schems
 Plugin 'flazz/vim-colorschemes'
@@ -85,6 +65,13 @@ Plugin 'ntpeters/vim-better-whitespace'
 " React stuff
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
+
+" Fuzzy file finder
+Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf'
+" If installed using Homebrew
+set rtp+=/usr/local/opt/fzf
+nnoremap <c-p> :FZF<cr>
 
 " ------------
 " Start Python Stuff
@@ -103,6 +90,7 @@ EOF
 
 " Syntax highlighting and checking
 Plugin 'scrooloose/syntastic'
+let g:syntastic_python_flake8_args = "--max-line-length=120"
 
 " Add PEP8 checking
 Plugin 'nvie/vim-flake8'
@@ -202,16 +190,6 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-
-" Tab spacing
-set tabstop=4       " The width of a TAB is set to 4.
-                    " Still it is a \t. It is just that
-                    " Vim will interpret it to be having
-                    " a width of 4.
-set shiftwidth=4    " Indents will have a width of 4
-set softtabstop=4   " Sets the number of columns for a TAB
-set expandtab       " Expand TABs to spaces
-set shiftround      " always indent to the nearest tab stop
 
 " Navigate between files stored in buffer
 :nnoremap <Tab> :bnext<CR>
