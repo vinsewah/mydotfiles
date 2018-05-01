@@ -10,18 +10,23 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
+
+" Airline
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 " Powerline
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 " Powerline setup
-set guifont=Inconsolata\ for\ Powerline:h15
-let g:Powerline_symbols = 'fancy'
-set encoding=utf-8
-set t_Co=256
-set fillchars+=stl:\ ,stlnc:\
-set term=xterm-256color
-set termencoding=utf-8
-set laststatus=2 " last window always has a status line
+" set guifont=Inconsolata\ for\ Powerline:h15
+" let g:Powerline_symbols = 'fancy'
+" let g:powerline_pycmd = 'py3'
+" set encoding=utf-8
+" set t_Co=256
+" set fillchars+=stl:\ ,stlnc:\
+" set term=xterm-256color
+" set termencoding=utf-8
+" set laststatus=2 " last window always has a status line
 
 " Install Fugitive Git Plugin
 Bundle 'tpope/vim-fugitive'
@@ -73,10 +78,15 @@ Plugin 'junegunn/fzf'
 set rtp+=/usr/local/opt/fzf
 nnoremap <c-p> :FZF<cr>
 
+" Vim go
+Plugin 'fatih/vim-go'
+
 " ------------
 " Start Python Stuff
 " Auto complete
 Bundle 'Valloric/YouCompleteMe'
+
+Bundle 'heavenshell/vim-pydocstring'
 
 " python with virtualenv support
 py << EOF
@@ -148,6 +158,7 @@ au BufNewFile,BufRead *.py
 " ----------------
 
 Bundle "kshenoy/vim-signature"
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -211,3 +222,18 @@ nnoremap <Leader>gpl :Dispatch! git pull<CR>
 
 " Backspace key won't move from current line
 set backspace=indent,eol,start
+
+" Mouse support in vi
+set mouse=a
+
+" Set ctags directory
+set tags=./.tags,.tags;$HOME
+
+" yank to clipboard
+if has("clipboard")
+  set clipboard=unnamed " copy to the system clipboard
+
+  if has("unnamedplus") " X11 support
+    set clipboard+=unnamedplus
+  endif
+endif
