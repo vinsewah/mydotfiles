@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/vincentchang/.oh-my-zsh
@@ -84,11 +84,53 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Lyft stuff
+source '/Users/vincentchang/src/awsaccess/awsaccess2.sh' # awsaccess
+export PS1="\$(ps1_mfa_context)$PS1" # awsaccess
+
+# Vi bindings on prompt
+set -o vi
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+
+# Aliases
 alias so="ssh vince-onebox.dev.ln"
 alias spa="ssh publicapi-legacy-vince-onebox.dev.ln"
 alias sfr="ssh fixedroutes-legacy-vince-onebox.dev.ln"
 alias sal="ssh api-legacy-vince-onebox.dev.ln"
 alias sf="ssh fanner-legacy-vince-onebox.dev.ln"
+alias sfrp="ssh fixedroutes-production-iad.lyft.net"
+
 alias ctags="`brew --prefix`/bin/ctags" 
-alias ct="ctags -R -f ./tags ."
+alias ct="ctags -R -f ./.tags ."
+alias a='ag --noheading -S'
+alias al='a -l'
+
+#test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+
+alias vi='/usr/local/Cellar/vim/8.0.1750/bin/vi'
+alias vim='/usr/local/Cellar/vim/8.0.1750/bin/vim'
+
+function sshOneboxFunc() {
+  eval "ssh "$1"-legacy-"$2"-onebox.dev.lyft.net"
+}
+alias onebox=sshOneboxFunc
+
+function syncOneboxFunc() {
+    eval "~/src/ops/hacktools/sync-to-onebox-v3.sh "$1"-legacy-"$2"-onebox.dev.lyft.net"
+}
+alias oneboxs=syncOneboxFunc
+alias r='exec bash'
+
+# Allows you to page up and down with ctrl-{f,b} in FZF
+export FZF_DEFAULT_OPTS='--bind ctrl-f:page-down,ctrl-b:page-up'
 source '/Users/vincentchang/src/blessclient/lyftprofile' # bless ssh alias
+
+# Go
+export GOPATH=~/src/go
+export PATH=$GOPATH/bin:$PATH
+export GOPATH=/Users/vincentchang/go
+
+# Android
+export ANDROID_HOME=/Users/vincentchang/Library/Android/sdk
