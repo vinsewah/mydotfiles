@@ -85,8 +85,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Lyft stuff
-source '/Users/vincentchang/src/awsaccess/awsaccess2.sh' # awsaccess
-export PS1="\$(ps1_mfa_context)$PS1" # awsaccess
+source '/Users/vincentchang/src/blessclient/lyftprofile'
 
 # Vi bindings on prompt
 set -o vi
@@ -94,13 +93,6 @@ bindkey -v
 bindkey '^R' history-incremental-search-backward
 
 # Aliases
-alias so="ssh vince-onebox.dev.ln"
-alias spa="ssh publicapi-legacy-vince-onebox.dev.ln"
-alias sfr="ssh fixedroutes-legacy-vince-onebox.dev.ln"
-alias sal="ssh api-legacy-vince-onebox.dev.ln"
-alias sf="ssh fanner-legacy-vince-onebox.dev.ln"
-alias sfrp="ssh fixedroutes-production-iad.lyft.net"
-
 alias ctags="`brew --prefix`/bin/ctags" 
 alias ct="ctags -R -f ./.tags ."
 alias a='ag --noheading -S'
@@ -108,12 +100,14 @@ alias al='a -l'
 
 #test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-
-alias vi='/usr/local/Cellar/vim/8.0.1750/bin/vi'
-alias vim='/usr/local/Cellar/vim/8.0.1750/bin/vim'
-
-function sshOneboxFunc() {
-  eval "ssh "$1"-legacy-"$2"-onebox.dev.lyft.net"
+sshOneboxFunc() {
+    if [ $# -eq 2 ]; then
+        ~/src/blessclient/ssh_wrapper.sh -oStrictHostKeyChecking=no $2-legacy-$1-onebox.dev.lyft.net
+    elif [ $# -eq 1 ]; then
+        ~/src/blessclient/ssh_wrapper.sh -oStrictHostKeyChecking=no $1-onebox.dev.lyft.net
+    else
+        ~/src/blessclient/ssh_wrapper.sh -oStrictHostKeyChecking=no vc-onebox.dev.lyft.net
+    fi
 }
 alias onebox=sshOneboxFunc
 
@@ -134,3 +128,19 @@ export GOPATH=/Users/vincentchang/go
 
 # Android
 export ANDROID_HOME=/Users/vincentchang/Library/Android/sdk
+
+function safeterm {
+  # Term nodes by AWS ID or IP
+
+  for arg in "$@"
+  do
+    if [[ "$arg" =~ ^([0-9]+\.){3}[0-9]+$ ]]
+    then
+      addr="$arg"
+    else
+      addr="i-$arg.ln"
+    fi
+
+    ssh -o StrictHostKeyChecking=no "$addr" 'sudo /etc/service/envoy/web-off.sh; sudo shutdown -h now' &
+  done
+}
