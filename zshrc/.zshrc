@@ -119,12 +119,10 @@ alias r='exec bash'
 
 # Allows you to page up and down with ctrl-{f,b} in FZF
 export FZF_DEFAULT_OPTS='--bind ctrl-f:page-down,ctrl-b:page-up'
-source '/Users/vincentchang/src/blessclient/lyftprofile' # bless ssh alias
 
 # Go
 export GOPATH=~/src/go
 export PATH=$GOPATH/bin:$PATH
-export GOPATH=/Users/vincentchang/go
 
 # Android
 export ANDROID_HOME=/Users/vincentchang/Library/Android/sdk
@@ -144,3 +142,4 @@ function safeterm {
     ssh -o StrictHostKeyChecking=no "$addr" 'sudo /etc/service/envoy/web-off.sh; sudo shutdown -h now' &
   done
 }
+source '/Users/vincentchang/src/blessclient/lyftprofile' # bless ssh alias

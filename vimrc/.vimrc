@@ -237,3 +237,6 @@ if has("clipboard")
     set clipboard+=unnamedplus
   endif
 endif
+
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
