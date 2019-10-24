@@ -88,16 +88,6 @@ Bundle 'Valloric/YouCompleteMe'
 
 Bundle 'heavenshell/vim-pydocstring'
 
-" python with virtualenv support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
-
 " Syntax highlighting and checking
 Plugin 'scrooloose/syntastic'
 let g:syntastic_python_flake8_args = "--max-line-length=120"
@@ -106,6 +96,8 @@ let g:syntastic_python_flake8_args = "--max-line-length=120"
 Plugin 'nvie/vim-flake8'
 " Automatically Fix Pep8 Errors
 Plugin 'tell-k/vim-autopep8'
+
+Plugin 'uarun/vim-protobuf'
 
 "" Highlight groups for errors
 " pep8 errors
