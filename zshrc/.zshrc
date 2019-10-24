@@ -142,4 +142,27 @@ function safeterm {
     ssh -o StrictHostKeyChecking=no "$addr" 'sudo /etc/service/envoy/web-off.sh; sudo shutdown -h now' &
   done
 }
-source '/Users/vincentchang/src/blessclient/lyftprofile' # bless ssh alias
+export LYFT_CODE_ROOT=$GOPATH/src/github.com/lyft
+
+alias runlyft="aws-okta exec zimride-client-team-access-readonly -- runlyft"
+
+alias ga='git add'
+alias gaa='git add -A'
+alias gb='git status | head -1 | awk '\''{print $3}'\'' | pbcopy'
+alias gbr='git branch'
+alias gce='git commit --allow-empty-message -m '\'''\'' '
+alias gcm='git commit -m'
+alias gcmn='git commit --no-verify -m'
+alias gco='git checkout'
+alias gdf='git diff'
+alias gf='git fetch'
+alias gft='git fetch'
+alias glg='git log'
+alias gmg='git merge'
+alias gpl='git pull'
+alias gps='git push'
+alias gst='git status'
+
+PATH=$PATH:/Users/vincentchang/.lyftkube-bin
+alias runlyft="aws-okta exec zimride-client-team-access-readonly -- runlyft"
+alias okta="aws-okta exec zimride-sudo-developer -- $SHELL"
